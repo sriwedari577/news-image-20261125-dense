@@ -1,25 +1,48 @@
-# 25 November 2026 — One Day in the News (Dense Broadsheet)
+[![make.fun · news-image-20261125](https://make.fun/badge/news-image-20261125.svg)](https://make.fun/bounty/news-image-20261125?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261125)
+[![rank](https://make.fun/badge/news-image-20261125/sriwedari577/news-image-20261125-dense/rank.svg)](https://make.fun/bounty/news-image-20261125/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261125)
+[![reward](https://make.fun/badge/news-image-20261125/sriwedari577/news-image-20261125-dense/reward.svg)](https://make.fun/bounty/news-image-20261125?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261125)
 
-[![make.fun](https://make.fun/badge/news-image-20261125.svg)](https://make.fun/c/news-image-20261125?utm_source=github&utm_medium=readme&utm_campaign=makefun)
-[![rank](https://make.fun/badge/news-image-20261125/sriwedari577/news-image-20261125-dense/rank.svg)](https://make.fun/c/news-image-20261125?utm_source=github&utm_medium=readme&utm_campaign=makefun)
-[![reward](https://make.fun/badge/news-image-20261125/sriwedari577/news-image-20261125-dense/reward.svg)](https://make.fun/c/news-image-20261125?utm_source=github&utm_medium=readme&utm_campaign=makefun)
+# One day in the news — Wednesday 25 November 2026
 
-A dense broadsheet image summing up 25 November 2026 in 36 stories, drawn
-programmatically by `main.ts` (Node 22, standard library only, no network).
+A single 1024×1024 broadsheet image of the day's news: 38 stories, every one of
+which happened or was first reported on 25 November 2026, drawn entirely in
+code. Three lead stories, twelve illustrated cards, and an "Also on" list carry
+the day, with a numbers strip, a UTC timeline, a schematic dot-grid world map,
+and a DATE CHECK box listing the big 24 November stories that were deliberately
+left out.
 
-The image names the date prominently, carries a DATE CHECK box and a UTC
-timeline strip, three lead stories (Shenzhou-24 launch, Houthi threat to
-Jeddah's Red Sea ports, Asia stocks tumbling on a tariff threat), nine cards,
-and a numbered ALSO ON list (items 13–36) covering seven regions
-(Asia-Pacific, Middle East, Europe, North America, Africa, South America
-and global stories) and many fields: conflict, space, markets, energy,
-technology, health, sport, politics and culture.
+## How it is made
 
-Every story happened or was first reported on 25 November 2026 in some
-time zone. Status labels are shown in the image: CONFIRMED, REPORTED, and
-CLAIM for unverified claims (the Iranian tanker-mine claims and the
-chemical-weapons allegation), so speculation is never presented as fact.
-All stories were checked against news reports dated 25 November 2026 during research; only the program, license and this README ship in the repository.
+`main.ts` is the whole program — Node.js standard library only, no network, no
+dependencies. It contains:
 
-Run: `mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts` — writes
-`out/entry.png` (1024x1024 PNG, under 1 MiB), byte-identical on repeat runs.
+- a hand-rolled PNG encoder (filter 0, zlib deflate),
+- a vector stroke font designed for this page: every glyph is a polyline,
+  mixed case with proportional widths and a heavy display weight, so headlines
+  stay readable when the image is shrunk to 300px,
+- fifteen layered scenes drawn from primitives (gradient skies, ground bands,
+  and three to five identifiable objects each),
+- a schematic dot-grid map with fifteen numbered pins, one per lead story.
+
+The output is deterministic: repeated runs produce a byte-identical PNG.
+
+## Run it
+
+```sh
+node main.ts
+```
+
+Requires a Node.js version with type stripping (Node 22.6+; built with Node 24).
+The PNG is written to `$MAKEFUN_OUTPUT_DIR`, or to `./out/entry.png` when that
+variable is unset.
+
+## Reading the page
+
+Every story carries a status — Confirmed, Reported, Claim, or Official — and a
+named source, with the legend beside the map. Hook badges on the lead and
+illustrated cards carry the day's sharpest verified figure for that story.
+Times in the timeline are UTC and come from primary reporting only.
+
+## License
+
+MIT — see `LICENSE`.
