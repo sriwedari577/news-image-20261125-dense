@@ -2,47 +2,45 @@
 [![rank](https://make.fun/badge/news-image-20261125/sriwedari577/news-image-20261125-dense/rank.svg)](https://make.fun/bounty/news-image-20261125/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261125)
 [![reward](https://make.fun/badge/news-image-20261125/sriwedari577/news-image-20261125-dense/reward.svg)](https://make.fun/bounty/news-image-20261125?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261125)
 
-# One day in the news — Wednesday 25 November 2026
+# World News — 25 November 2026
 
-A single 1024×1024 broadsheet image of the day's news: 38 stories, every one of
-which happened or was first reported on 25 November 2026, drawn entirely in
-code. Three lead stories, twelve illustrated cards, and an "Also on" list carry
-the day, with a numbers strip, a UTC timeline, a schematic dot-grid world map,
-and a DATE CHECK box listing the big 24 November stories that were deliberately
-left out.
+One image summing up the world's news of Wednesday 25 November 2026:
+48 stories across 10 regions, each verified against wire and primary
+reporting of that day, with explanatory text for every story, a UTC
+timeline, a region bar, and a date-check strip excluding eight 24 November
+items that are not this day's news.
 
-## How it is made
+## How it is built
 
-`main.ts` is the whole program — Node.js standard library only, no network, no
-dependencies. It contains:
+`main.ts` (Node 22, standard library only) draws the whole page from
+scratch and writes `entry.png`: no network, no bundled image, no
+randomness — two runs write byte-identical output. The letterforms are a
+vector stroke font defined in the program itself as polylines on a grid,
+drawn in mixed case. The page is 1024 × 1024 and under 1 MiB.
 
-- a hand-rolled PNG encoder (filter 0, zlib deflate),
-- a vector stroke font designed for this page: every glyph is a polyline,
-  mixed case with proportional widths and a heavy display weight, so headlines
-  stay readable when the image is shrunk to 300px,
-- fifteen layered scenes drawn from primitives (gradient skies, ground bands,
-  and three to five identifiable objects each),
-- a schematic dot-grid map with fifteen numbered pins, one per lead story.
-
-The output is deterministic: repeated runs produce a byte-identical PNG.
-
-## Run it
+Run it:
 
 ```sh
-node main.ts
+mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
-Requires a Node.js version with type stripping (Node 22.6+; built with Node 24).
-The PNG is written to `$MAKEFUN_OUTPUT_DIR`, or to `./out/entry.png` when that
-variable is unset.
+## Verification
 
-## Reading the page
+Every story hook was checked on the web in the build session against
+Reuters, AP, wire services, or primary releases (governments, courts,
+companies, the US Labor Department and BEA) before it was drawn. Stories
+whose 25 November hook could not be verified were dropped, not kept.
+Corrections from the audit of the previous entry are applied: the EU fund
+is €45bn (not €50bn); the Bulgaria boat was intercepted with 35 aboard
+(no capsize, no bodies); there is no OPEC+ meeting on 1 December; the
+Japan–ICC item is reframed to Foreign Minister Motegi's 25 November
+meeting (the Takaichi meeting was 24 November); jobless claims are
+sourced to the Labor Department; and the Shenzhou-24 deck reads "first
+Pakistani in orbit".
 
-Every story carries a status — Confirmed, Reported, Claim, or Official — and a
-named source, with the legend beside the map. Hook badges on the lead and
-illustrated cards carry the day's sharpest verified figure for that story.
-Times in the timeline are UTC and come from primary reporting only.
+## Repository badges
 
-## License
-
-MIT — see `LICENSE`.
+The three badges at the top of this file link to the competition page
+and to this repository's live rank and reward on make.fun. The GitHub
+About for this repository points at the competition page, with topic
+`makefun`.
